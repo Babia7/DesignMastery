@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DesignMastery - Modern UI/UX Education</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            colors: {
+              glass: {
+                100: 'rgba(255, 255, 255, 0.1)',
+                200: 'rgba(255, 255, 255, 0.2)',
+                300: 'rgba(255, 255, 255, 0.3)',
+                border: 'rgba(255, 255, 255, 0.1)',
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      /* Base Variables */
+      :root {
+        --bg-primary: #0f172a;
+        --text-primary: #f8fafc;
+      }
+
+      /* Bioluminescent Theme */
+      .theme-bioluminescent {
+        --bg-primary: #020617;
+        --text-primary: #e2e8f0;
+      }
+      .theme-bioluminescent body {
+        background-color: #020617;
+        color: #e2e8f0;
+      }
+      .theme-bioluminescent .accent-text {
+        color: #22d3ee; /* Cyan */
+        text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+      }
+      .theme-bioluminescent .accent-border {
+        border-color: #84cc16; /* Lime */
+        box-shadow: 0 0 5px rgba(132, 204, 22, 0.3);
+      }
+
+      /* Swiss Polarity Theme */
+      .theme-swiss {
+        --bg-primary: #fdfbf7;
+        --text-primary: #000000;
+      }
+      .theme-swiss body {
+        background-color: #fdfbf7;
+        color: #000000;
+        font-family: 'Inter', sans-serif;
+      }
+      .theme-swiss * {
+        border-radius: 0 !important;
+      }
+      .theme-swiss .accent-text {
+        color: #ef4444; /* Red */
+        font-weight: 800;
+      }
+
+      /* Default Slate Theme Overrides */
+      body {
+        background-color: #f8fafc;
+        color: #0f172a;
+      }
+      .dark body {
+        background-color: #0f172a;
+        color: #f8fafc;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #94a3b8; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #64748b; 
+      }
+
+      /* Print Optimization */
+      @media print {
+        @page {
+          margin: 1.5cm;
+          size: A4;
+        }
+        
+        body, #root > div {
+          background-color: white !important;
+          color: #1e293b !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          font-size: 11pt;
+          line-height: 1.5;
+        }
+        
+        /* Reset containers */
+        .min-h-screen {
+            min-height: 0 !important;
+            height: auto !important;
+            background-color: white !important;
+        }
+
+        /* Hide UI elements */
+        .no-print, nav, footer, button, .interactive-demo-container, .scrollbar-hide, .sticky, header .flex {
+          display: none !important;
+        }
+
+        /* Content Layout */
+        .print-content {
+          width: 100% !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          max-width: none !important;
+          display: block !important;
+        }
+
+        /* Typography */
+        h1 { font-size: 24pt !important; margin-bottom: 0.5cm !important; line-height: 1.2 !important; color: #0f172a !important; }
+        h2 { font-size: 18pt !important; margin-top: 1cm !important; margin-bottom: 0.5cm !important; color: #0f172a !important; break-after: avoid; }
+        h3 { font-size: 14pt !important; margin-top: 0.8cm !important; margin-bottom: 0.3cm !important; color: #334155 !important; break-after: avoid; }
+        p, li { font-size: 11pt !important; color: #334155 !important; margin-bottom: 0.3cm !important; orphans: 3; widows: 3; }
+        
+        /* Links */
+        a { text-decoration: none !important; color: #2563eb !important; font-weight: 500; }
+
+        /* Code Blocks */
+        pre, code {
+          background-color: #f1f5f9 !important;
+          color: #0f172a !important;
+          border: 1px solid #e2e8f0 !important;
+          white-space: pre-wrap !important;
+          word-wrap: break-word !important;
+          font-size: 9pt !important;
+          break-inside: avoid;
+        }
+        
+        /* Page Breaks */
+        .print-break-before { break-before: page; page-break-before: always; }
+        .print-break-after { break-after: page; page-break-after: always; }
+        .print-avoid-break { break-inside: avoid; page-break-inside: avoid; }
+
+        /* Static Visuals Container */
+        .static-visual-container {
+          display: block !important;
+          break-inside: avoid;
+          page-break-inside: avoid;
+          margin: 1cm 0;
+          border: 1px solid #cbd5e1;
+        }
+
+        /* Running Footer */
+        .print-footer {
+          display: flex !important;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          border-top: 1px solid #e2e8f0;
+          padding-top: 0.2cm;
+          justify-content: space-between;
+          font-size: 9pt;
+          color: #94a3b8;
+        }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.6",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.25"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
